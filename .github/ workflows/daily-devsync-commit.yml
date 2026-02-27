@@ -8,21 +8,21 @@ on:
 jobs:
   daily-commit:
     runs-on: ubuntu-latest
+    
     permissions:
       contents: write
-      
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Track daily activity for 24f2008471@ds.study.iitm.ac.in
-        run: |
-          echo "Daily automated activity logged at $(date)" >> activity_log.txt
+        run: echo "Daily automated activity logged at $(date)" >> activity_log.txt
 
       - name: Commit and push changes
         run: |
-          git config --global user.name "DevSync Bot"
-          git config --global user.email "24f2008471@ds.study.iitm.ac.in"
+          git config user.name "DevSync Bot"
+          git config user.email "24f2008471@ds.study.iitm.ac.in"
           git add activity_log.txt
-          git commit -m "Automated daily DevSync commit" || echo "No changes to commit"
+          git commit -m "Automated daily DevSync commit" || exit 0
           git push
